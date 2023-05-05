@@ -1,6 +1,6 @@
 <h1 align="center"> get-jobs-boss</h1>
 <div align="center">
-    帮你快速在Boss直聘平台上沟通以此来获得一份工作
+    自动在Boss直聘平台上沟通以此来获得一份工作
 </div>
 
 ## 如何使用
