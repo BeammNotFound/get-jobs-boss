@@ -27,6 +27,6 @@
 > 希望能够在现在的大环境下帮助你找到一份满意的工作
 
 ## 请我喝杯咖啡☕️
-<img src="/Users/beamstark/java-project/get-jobs-boss/src/public/IMG_6480.JPG" alt="" height="250">
+<img src="./src/public/IMG_6480.JPG" alt="" height="250">
 
-<img src="/Users/beamstark/java-project/get-jobs-boss/src/public/IMG_6479.JPG" alt="" height="250">
+<img src="./src/public/IMG_6479.JPG" alt="" height="250">
