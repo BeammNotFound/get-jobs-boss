@@ -23,6 +23,11 @@
 ### 最后一步：运行代码
 需要扫码登陆
 <br>
+****
+
+**如果你想在 [拉钩网](http://lagou.com) 上自动投递简历，请 [Click me](https://github.com/BeammNotFound/get-jobs-lagou).**
+<br>
+<br>
 
 > 希望能够在现在的大环境下帮助你找到一份满意的工作
 
