@@ -6,6 +6,7 @@
 ## 如何使用
 由于使用selenium，所以
 ### 第一步：下载ChromeDriver
+找到你对应Chrome版本的ChromeDriver
 > https://sites.google.com/a/chromium.org/chromedriver/home
 
 ### 第二步：配置ChromeDriver
@@ -35,4 +36,3 @@
 <img src="./src/public/IMG_6480.JPG" alt="" width="300">
 
 <img src="./src/public/IMG_6479.JPG" alt="" width="300">
-🌈
