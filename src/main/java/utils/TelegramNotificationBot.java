@@ -3,7 +3,6 @@ package utils;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -19,15 +18,6 @@ import java.util.List;
 public class TelegramNotificationBot {
     private static final String TELEGRAM_API_TOKEN = "";
     private static final long CHAT_ID = 1L;
-
-    @SneakyThrows
-    public static void main(String[] args) {
-        TelegramNotificationBot telegramNotificationBot = new TelegramNotificationBot();
-        while (true) {
-            telegramNotificationBot.sendMessage("test", "test");
-            Thread.sleep(2000);
-        }
-    }
 
     public void sendMessage(String message, String title) {
 
