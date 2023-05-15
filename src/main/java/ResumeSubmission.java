@@ -76,7 +76,7 @@ public class ResumeSubmission {
                 String com = driver.findElements(By.className("company-info")).get(1).getText();
                 String title = driver.findElement(By.className("name")).getText();
                 returnList.add(com + " | " + title);
-                log.info("投递{}公司 | {}一职", com, title);
+                log.info("投递{} | {}一职", com, title);
                 Thread.sleep(1500);
             }
         }
