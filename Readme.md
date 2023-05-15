@@ -18,15 +18,15 @@
 ### 第三步：修改代码
 #### 修改主程序代码
 打开 /src/main/java/ResumeSubmission.java <br>
-修改 **baseUrl** 为自己的筛选条件 <br>
+**baseUrl**：自己的筛选条件 <br>
 可以在 [boss直聘](https://www.zhipin.com/hangzhou/) 中筛选你的工作条件然后复制url ⚠️ 要为&page= 结尾<br>
 **page** ：从第几页开始投递，page不能小于1<br>
 **maxPage**：投递到第几页<br>
-**EnableNotifications** 为是否开启Telegram机器人通知
+**EnableNotifications**：是否开启Telegram机器人通知
 #### 修改TelegramBot通知代码
 打开 /src/main/java/utils/TelegramNotificationBot.java <br>
-修改 **TELEGRAM_API_TOKEN** 为你的机器人的token <br>
-修改 **CHAT_ID** 为你的机器人的chat_id <br>
+**TELEGRAM_API_TOKEN**：你的机器人的token <br>
+**CHAT_ID**：你的机器人的chat_id <br>
 ### 最后一步：运行代码
 需要扫码登陆
 <br>
