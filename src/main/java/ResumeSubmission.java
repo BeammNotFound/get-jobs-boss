@@ -1,6 +1,12 @@
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -26,10 +32,12 @@ public class ResumeSubmission {
     static Integer maxPage = 3;
     static String loginUrl = "https://www.zhipin.com/web/user/?ka=header-login";
     static String[] recruitUrl = new String[] {
-        "https://www.zhipin.com/web/geek/job?city=101210100&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
+//        "https://www.zhipin.com/web/geek/job?city=101210100&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
+        "https://www.zhipin.com/web/geek/job?city=101210100&experience=102&degree=204,203&position=100101&jobType=1901&salary=405&page=",
+        "https://www.zhipin.com/web/geek/job?city=101020100&experience=102&degree=204,203&position=100101&jobType=1901&salary=405&page=",
+        "https://www.zhipin.com/web/geek/job?city=101020100&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
         "https://www.zhipin.com/web/geek/job?city=101010100&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
         "https://www.zhipin.com/web/geek/job?city=101280600&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
-        "https://www.zhipin.com/web/geek/job?city=101020100&experience=102&degree=204,203&position=100101&jobType=1901&salary=406&page=",
     };
     static ChromeDriver driver = new ChromeDriver();
     static WebDriverWait wait15s = new WebDriverWait(driver, 15000);
@@ -37,11 +45,15 @@ public class ResumeSubmission {
 
     static int minKSalary = 14;
 
-    static int maxKSalary = 30;
+    static int minMaxKSalary = 20;
+
+    static int maxKSalary = 40;
 
     static int maxMinKSalary = 20;
 
     static int salaryCount = 14;
+
+    static int graduateYear = 2024;
 
     public static void main(String[] args) {
         Date sdate = new Date();
@@ -81,6 +93,26 @@ public class ResumeSubmission {
                 wait15s.until(ExpectedConditions.presenceOfElementLocated(
                     By.cssSelector("[class*='btn btn-startchat']")));
                 WebElement btn = driver.findElement(By.cssSelector("[class*='btn btn-startchat']"));
+                List<WebElement> timeCondition = driver.findElements(By.cssSelector("p.school-job-sec span"));
+                if (timeCondition.size() == 2) {
+                    String graduateYearText = timeCondition.get(0).getText().trim();
+                    if (!graduateYearText.startsWith("毕业时间：不限") && !graduateYearText.startsWith("毕业时间：" + graduateYear) && Arrays.stream(graduateYearText.substring("毕业时间：".length()).split("-")).noneMatch(year -> year.startsWith(graduateYear + ""))) {
+                        log.warn("【毕业时间不匹配】{}", timeCondition.get(0).getText());
+                    }
+                    String[] splitEndTime = timeCondition.get(1).getText().trim().split("：");
+                    if (splitEndTime.length != 2) {
+                        log.warn("【截止日期格式错误】{}", timeCondition.get(1).getText());
+                        continue;
+                    } else {
+                        LocalDateTime endTime = LocalDate.parse(splitEndTime[1], DateTimeFormatter.ofPattern("yyyy.MM.dd")).atStartOfDay();
+                        if (endTime.isBefore(LocalDateTime.now())) {
+                            log.warn("【截止日期已过期】{}", timeCondition.get(1).getText());
+                            continue;
+                        }
+                    }
+                } else {
+                    log.warn("无法获取毕业时间及招聘截止时间, {}", String.join("|", timeCondition.stream().map(item -> item.getText()).collect(Collectors.toSet())));
+                }
 
                 if ("立即沟通".equals(btn.getText())) {
                     // 校验薪资
@@ -94,7 +126,7 @@ public class ResumeSubmission {
                         continue;
                     }
                     // 校验
-                    if (minKSalary > Integer.parseInt(split[0]) || maxKSalary < Integer.parseInt(split[1]) || maxMinKSalary > Integer.parseInt(split[1])) {
+                    if ((minKSalary > Integer.parseInt(split[0]) || minMaxKSalary < Integer.parseInt(split[0])) && (maxKSalary < Integer.parseInt(split[1]) || maxMinKSalary > Integer.parseInt(split[1]))) {
                         log.info("【月薪不匹配】跳过职位，薪资不匹配,{} | {}", elements.size() < 2 ? "未知" : elements.get(1).getText(), titleNode == null ? salary.getText() : titleNode.getText());
                         continue;
                     }
