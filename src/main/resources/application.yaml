@@ -1,0 +1,5 @@
+driver:
+  name: webdriver.edge.driver
+  path: D:\edge-driver\msedgedriver.exe
+login:
+  url: https://www.zhipin.com/web/user/?ka=header-login
